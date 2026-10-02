@@ -1,4 +1,21 @@
 /* css styles */
+
 .navbar-dark, .quarto-title-banner {
   background-color: #006DAE;
 }
+
+/*
+
+.navbar-dark, .quarto-title-banner {
+  background-color: #f5c000;
+}
+
+.quarto-title-banner h1 {
+  color: #010101
+}
+
+.listing-categories {
+  padding-top: 3px;
+}
+
+*/

@@ -1,13 +1,17 @@
 ---
 title: "Good Hygiene, Bad Numbers? The Paradox of Germany's Hospital Infections"
 author: "Eduardo Vitale"
-date: "2026-09-29"
-categories: [news]
+date: 2026-09-29
+image: thumbnail.jpg
+categories:
+    - news
+    - healthcare
+    - R
 ---
 
 Scrubbing up before surgery is one of medicine's oldest rituals, and one of its most effective. 
 
-![Two surgical staff scrubbing their hands and forearms before an operation](thumbnail.jpg)
+![Two surgical staff scrubbing their hands and forearms before an operation](scrubbing.jpg){fig-alt=""}
 
 source: https://unsplash.com/it/foto/due-professionisti-medici-che-strofinano-le-mani-prima-dellintervento-XE5S7RAbwLI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
 

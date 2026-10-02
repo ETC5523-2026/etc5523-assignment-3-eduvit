@@ -4,8 +4,10 @@ project:
 website:
   title: "The big beautiful website"
   navbar:
+    left:
+      - href: about.qmd
+        text: About
     right:
-      - about.qmd
       - icon: github
         href: https://github.com/EduVit
 format:
@@ -13,6 +15,7 @@ format:
     theme: cosmo
     from: markdown+emoji
     css: styles.css
+    link-external-newwindow: true
 
 
 

@@ -1,6 +1,6 @@
 ---
-title: "President Eduardo Vitale"
-image: profile_adventurer.jpeg
+title: "Eduardo Vitale"
+image: profile_photo.jpeg
 about:
   template: jolla
   links:
@@ -12,10 +12,10 @@ about:
       href: https://instagram.com/edu.vitale
     - icon: envelope
       text: Contact me!
-      href: mailto:edu.vitalee@gmail.com
+      href: mailto:eduardo.vitale@studio.unibo.it
     - icon: envelope
       text: Contact me!
-      href: mailto:eduardo.vitale@studio.unibo.it
+      href: mailto:evit0003@student.monash.edu
 ---
 
 I'm a student of the Master's in Statistical Sciences at Università di Bologna (🇮🇹 Italy), currently on an exchange semester abroad at Monash University (🇦🇺 Australia) .

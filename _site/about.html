@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>President Eduardo Vitale – The big beautiful website</title>
+<title>Eduardo Vitale – The big beautiful website</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -93,11 +93,13 @@ ul.task-list li input[type="checkbox"] {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
-<span class="menu-text">President Eduardo Vitale</span></a>
+<span class="menu-text">About</span></a>
   </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/EduVit"> <i class="bi bi-github" role="img">
 </i> 
@@ -117,21 +119,20 @@ ul.task-list li input[type="checkbox"] {
     
 <!-- main -->
 <div class="quarto-about-jolla">
-  <img src="profile_adventurer.jpeg" class="about-image
+  <img src="profile_photo.jpeg" class="about-image
   round " style="height: 15em; width: 15em;">
  <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">President Eduardo Vitale</h1>
+<h1 class="title">Eduardo Vitale</h1>
 </div>
 <div class="quarto-title-meta">
   </div>
 </header><main class="content" id="quarto-document-content">
-<p>I’m a student of the Master’s in Statistical Sciences at Università di Bologna (Italy 🇮🇹), currently on an exchange semester abroad at Monash University (Australia 🇦🇺).</p>
+<p>I’m a student of the Master’s in Statistical Sciences at Università di Bologna (🇮🇹 Italy), currently on an exchange semester abroad at Monash University (🇦🇺 Australia) .</p>
 <p>My study topics include multidimensional data analysis, statistical modeling and neural networks. I have personal interest in all kinds of data that relate to geography, maps and transportation infrastructure (motorways, train networks, plane routes).</p>
 <p>In the past, I’ve contributed substantially to the <a href="https://osm.org">OpenStreetMap project</a> with edits around my hometown of Bologna, and the broader Emilia-Romagna region.</p>
 <p>I’ve been a poll worker for 5 different instances of electoral consultations in Italy, both at ordinary polling stations and postal voting counting stations. I’ve covered most existing roles, from scrutineer to president.</p>
 <p>I’ve played basketball agonistically, chess and played the piano for 10 years. In my free time, I also like to ride my bike or do hikes.</p>
-<p>eafeafafe</p>
 
 
 </main> 
@@ -145,11 +146,11 @@ ul.task-list li input[type="checkbox"] {
     <i class="bi bi-instagram"></i>
      <span class="about-link-text">Instagram</span>
   </a>
-  <a href="mailto:edu.vitalee@gmail.com" class="about-link" rel="" target="">
+  <a href="mailto:eduardo.vitale@studio.unibo.it" class="about-link" rel="" target="">
     <i class="bi bi-envelope"></i>
      <span class="about-link-text">Contact me!</span>
   </a>
-  <a href="mailto:eduardo.vitale@studio.unibo.it" class="about-link" rel="" target="">
+  <a href="mailto:evit0003@student.monash.edu" class="about-link" rel="" target="">
     <i class="bi bi-envelope"></i>
      <span class="about-link-text">Contact me!</span>
   </a>
@@ -236,6 +237,11 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

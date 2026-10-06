@@ -4,17 +4,21 @@ project:
 website:
   title: "The big beautiful website"
   navbar:
+    background: "#0d3b66"
+    foreground: "#d6e6f2"
     left:
       - href: about.qmd
         text: About
     right:
       - icon: github
         href: https://github.com/EduVit
+        target: _blank
 format:
   html:
     theme: cosmo
     from: markdown+emoji
     css: styles.css
+    lightbox: true
     link-external-newwindow: true
 
 

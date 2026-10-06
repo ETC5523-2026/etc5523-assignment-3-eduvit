@@ -1,5 +1,6 @@
 ---
 title: "Good Hygiene, Bad Numbers? The Paradox of Germany's Hospital Infections"
+description: "Understanding the reason behind Germany insane numbers"
 author: "Eduardo Vitale"
 date: 2026-09-29
 image: thumbnail.jpg

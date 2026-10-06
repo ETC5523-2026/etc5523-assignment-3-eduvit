@@ -1,21 +1,41 @@
-/* css styles */
-
-.navbar-dark, .quarto-title-banner {
-  background-color: #006DAE;
+:root {
+  --dark: #0d3b66;   /* navbar, links, details  (same as navbar background in _quarto.yml) */
+  --mid: #b3cfe7;    /* title banner */
+  --light: #d6e6f2;  /* page background (same as navbar foreground) */
+  --text: #08131f;   /* text and titles: darkest shade, for contrast */
 }
 
-/*
+body { background-color: var(--light); color: var(--text); }
+h1, h2, h3, h4, h5, h6 { color: var(--text); }
+a { color: var(--dark); }
+div.quarto-post a { color: var(--text); }
 
-.navbar-dark, .quarto-title-banner {
-  background-color: #f5c000;
-}
+/* navbar: current page stays the same color, hover turns white */
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-brand { color: var(--light); }
 
-.quarto-title-banner h1 {
-  color: #010101
-}
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-brand:hover { color: #ffffff; }
 
-.listing-categories {
-  padding-top: 3px;
-}
+/* title banner */
+.quarto-title-banner { background-color: var(--mid); }
+.quarto-title-banner, .quarto-title-banner h1 { color: var(--text); }
 
-*/
+/* bold: listing titles, date, author + AUTHOR / PUBLISHED on posts */
+.listing-title a, .listing-date, .listing-author,
+#title-block-header.quarto-title-block.default .quarto-title-meta-heading { font-weight: bold; }
+
+/* separator between posts */
+div.quarto-post { border-bottom: 1px solid var(--dark); }
+
+/* category tags (homepage) and about page buttons */
+.listing-categories { padding-top: 3px; }
+div.quarto-post .listing-categories .listing-category { color: var(--text); border: 1px solid var(--text); }
+div.quarto-about-jolla .about-link { color: var(--dark); border: 1px solid var(--dark); }
+
+/* category tags on the post page (they sit on the banner) */
+.quarto-title .quarto-categories .quarto-category { color: var(--text); border: 1px solid var(--text); opacity: 1; }
+
+/* figures */
+figcaption, .figure-caption { color: var(--dark); }
+main img { border: 1px solid var(--dark); border-radius: 6px; }

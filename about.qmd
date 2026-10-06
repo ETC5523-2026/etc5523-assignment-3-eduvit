@@ -7,9 +7,11 @@ about:
     - icon: github
       text: Github
       href: https://github.com/EduVit
+      target: _blank
     - icon: instagram
       text: Instagram
       href: https://instagram.com/edu.vitale
+      target: _blank
     - icon: envelope
       text: Contact me!
       href: mailto:eduardo.vitale@studio.unibo.it

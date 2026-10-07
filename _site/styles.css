@@ -46,8 +46,8 @@ div.quarto-post {border-bottom: 1px solid var(--dark);}
 .navbar .navbar-nav .nav-link.active, .navbar .navbar-brand {color: var(--light);}
 .navbar .navbar-nav .nav-link:hover, .navbar .navbar-brand:hover {color: #ffffff;}
 
-/* bold: listing titles, date, author in main page; AUTHOR / PUBLISHED on posts (this second part was made by AI) */
-.listing-title a, .listing-date, .listing-author,
+/* bold: listing titles, date in main page; AUTHOR / PUBLISHED on posts (this second part was made by AI) */
+.listing-title a, .listing-date, 
 #title-block-header.quarto-title-block.default .quarto-title-meta-heading {font-weight: bold;}
 
 /* category tags (homepage, post banner) and about page buttons (the rule that applies in the blog post was made by AI) */
@@ -64,3 +64,6 @@ div:has(> .plotly.html-widget) {
   background-color: #ffffff;
   padding: 12px;
 }
+
+/* hide the page scrollbar */
+html {scrollbar-width: none;} 

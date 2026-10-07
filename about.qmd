@@ -20,7 +20,7 @@ about:
       href: mailto:evit0003@student.monash.edu
 ---
 
-I'm a student of the Master's in Statistical Sciences at Università di Bologna (🇮🇹 Italy), currently on an exchange semester abroad at Monash University (🇦🇺 Australia) .
+I'm a student of the Master's in Statistical Sciences at Università di Bologna (Italy 🇮🇹), currently on an exchange semester abroad at Monash University (Australia 🇦🇺).
 
 My study topics include multidimensional data analysis, statistical modeling and neural networks. I have personal interest in all kinds of data that relate to geography, maps and transportation infrastructure (motorways, train networks, plane routes).
 

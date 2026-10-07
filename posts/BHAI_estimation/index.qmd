@@ -1,6 +1,6 @@
 ---
-title: "Fewer Infections, More Harm? The Paradox of Germany's Hospital Infections"
-description: "Fewer German patients catch infections in hospitals than the European average, yet Germans lose more healthy years to them. Why?"
+title: "Germany's Hospital Paradox: Fewer Infections, More Harm?"
+description: "German hospital patients are less likely to catch an infection than the European average, yet Germans lose more healthy years to them. Why?"
 author: "Eduardo Vitale"
 date: "2026-10-07"
 categories: [healthcare, public health, R]
@@ -46,41 +46,48 @@ per100k_eu <- tot_eu / sum(res_eu@population) * 1e5
 gap <- round((per100k_de / per100k_eu - 1) * 100) # % difference, Germany vs EU/EEA
 ```
 
-Scrubbing up before surgery is one of medicine's oldest rituals, and one of its most effective. Before every operation, surgeons spend minutes washing their hands and forearms, because a single contaminated hand can carry bacteria straight into a patient's body during the procedure.
+Scrubbing up before surgery is one of medicine's oldest routines, and one of its most effective. Before every operation, surgeons spend minutes washing their hands and forearms, because a single contaminated hand can carry bacteria straight into a patient's body during the procedure.
 
-![Two medical professionals scrubbing their hands before surgery.](thumbnail.jpg){fig-alt=""}
+![](thumbnail.jpg){fig-alt="Two medical professionals scrubbing their hands before surgery."}
 
 Even so, hospitals remain a place where people catch infections. On any given day, about one in 18 patients in a European hospital has at least one infection acquired during their stay (ECDC, 2013). These are called healthcare-associated infections (HAIs), infections that develop in hospital and are unrelated to the reason for admission. A procedure can go perfectly, and the patient can still develop a urinary tract infection from a catheter a few days later. In Germany, an estimated 20 to 30% of HAIs are preventable (Gastmeier et al., 2010), but prevention resources are limited, so knowing which infections cause the most harm matters as much as knowing how many there are.
 
-Germany is a particularly interesting case: per hospitalised patient, its infection rate is below the European average; across the whole population however, Germans lose more years of healthy life to HAIs than the European average. This post looks at three questions: how large the burden of HAIs in Germany is, which infections drive it, and how a lower risk per patient can still produce a higher burden overall.
+Germany is a particularly interesting case: per hospitalised patient, its infection rate is below the European average; across the whole population, however, Germans lose more years of healthy life to HAIs than the European average (Zacher et al., 2019). So how can fewer infections per patient end up causing more harm?
 
 ## Where the numbers come from
 
+The data come from a large survey run by the European Centre for Disease Prevention and Control in 2011 and 2012 (ECDC, 2013). On a single day, staff in each participating hospital checked every patient and recorded who had an HAI. Germany contributed a representative sample of 46 hospitals and `r format(sum(germany@num_survey_patients), big.mark=",")` patients; across the EU/EEA, more than 1,100 hospitals and over 270,000 patients took part.
 
+However, a single day only shows how many patients are infected on that day, not how many infections happen over a year, or how many people die from them. To cover this gap, Zacher et al. (2019) built BHAI, a free tool for the R programming language. It combines the survey with how long infections usually last (based on scientific literature), how many people go through hospital each year, and how likely each infection is to cause complications or death. Since none of these is known exactly, BHAI repeats the calculation 1,000 times and reports a best estimate together with a range that most likely contains the true value.
+
+The study looks at five common infections: pneumonia (HAP), surgical site infections (SSI), bloodstream infections (BSI), urinary tract infections (UTI) and *Clostridioides difficile* infections (CDI), a severe gut infection often triggered by antibiotics. Their impact is measured in disability-adjusted life years (DALYs), or healthy years of life lost, which add up years lost to early death (YLLs) and years lived with illness (YLDs). Using one unit makes it possible to compare a common but mild infection with a rare but deadly one. Earlier work had estimated this burden for Europe as a whole (Cassini et al., 2016); this study applies the same idea to Germany.
 
 ## How big is the problem?
 
-
+In 2011, these five infections caused an estimated `r format(round(tot_de["Cases"]), big.mark=",")` cases and `r format(round(tot_de["Deaths"]), big.mark=",")` deaths in Germany, adding up to `r format(round(tot_de["DALY"]), big.mark=",")` healthy years of life lost (@tbl-germany), or `r round(per100k_de["DALY"], 1)` for every 100,000 people. To put that in perspective, the combined effect of four common infections (influenza, *Salmonella*, hepatitis B and measles) cost Germany 39.4 healthy years per 100,000 people. This means that hospital infections cost almost eight times as much (Zacher et al., 2019). Most of these years are lost to early deaths (YLLs), whereas people living with the after-effects of an infection (YLDs) contribute less to this statistic.
 
 ```{r}
 #| label: tbl-germany
-#| tbl-cap: "Annual burden of five types of HAI, German PPS sample, Germany, 2011. Median and 95% uncertainty interval."
+#| tbl-cap: "Five hospital infections caused about half a million cases in Germany in 2011, with most healthy years lost to early deaths. Best estimate, with the likely range in brackets."
 tab1 <- bhai.prettyTable(res_de)[c(hai, "ALL"), ]
-tab1 <- data.frame(HAI=c(hai, "All"), tab1)
+tab1[] <- gsub(" \\(", "<br>(", tab1) # range on a second line
+tab1 <- data.frame(Infection=c(hai, "All"), tab1)
 
 gt(tab1) |>
+    fmt_markdown(columns=-Infection) |>
+    cols_align(align="center", columns=-Infection) |>
     cols_label(Cases="HAIs", Deaths="Attributable deaths", DALY="DALYs", YLL="YLLs", YLD="YLDs") |>
-    tab_style(style=cell_text(weight="bold"), locations=cells_body(rows=HAI == "All")) |>
+    tab_style(style=cell_text(weight="bold", whitespace="nowrap"), locations=cells_body(rows=Infection == "All")) |>
     tab_options(table.background.color="#ffffff", column_labels.font.weight="bold", container.padding.y=px(0))
 ```
 
 ## The most common infection is not the most deadly
 
-
+How often an infection happens and how deadly it is are two different things (@fig-cases-deaths). UTIs are by far the most common, making up almost half of all cases, but only a small share of them are fatal. Bloodstream infections are the opposite: they are the rarest of the five, but they kill about as many people as UTIs. *C. difficile* follows a similar pattern, with fewer cases than surgical wound infections but a comparable number of deaths. Hovering over the bars shows the exact figures for each infection. Together, pneumonia and bloodstream infections account for roughly half of all healthy years lost, but just over a quarter of all cases (Zacher et al., 2019). These numbers highlight that counting infections alone would point prevention efforts in the wrong direction and mislead health authorities.
 
 ```{r}
 #| label: fig-cases-deaths
-#| fig-cap: "Annual number of HAIs (left) and attributable deaths (right) by type of infection, Germany, 2011."
+#| fig-cap: "Urinary tract infections are the most common HAI in Germany; bloodstream infections are the rarest and cause about as many deaths (2011)."
 fig1 <- data.frame(hai=factor(hai, levels=hai), cases=NA, deaths=NA)
 for (i in 1:5) {
     fig1$cases[i] <- res_de@bhai_summary[[hai[i]]]$TOTAL["Cases", "50%"]
@@ -101,11 +108,15 @@ subplot(cases_plot, deaths_plot, titleY=TRUE, margin=0.08) |>
 
 ## Germany compared with the rest of Europe
 
+To compare Germany with the rest of Europe, the study runs the same analysis on two samples from the survey: the German hospitals (labelled *German PPS* in the figures, where PPS stands for point prevalence survey, the survey's official name) and the hospitals from all participating EU/EEA countries (*ECDC PPS*). Because Germany and the EU/EEA have very different population sizes, the results are expressed per 100,000 people, so that the two can be compared directly.
 
+On this basis, Germany has `r gap["Cases"]`% more hospital infections than the EU/EEA average, `r gap["Deaths"]`% more deaths from them, and `r gap["DALY"]`% more healthy years lost (@tbl-europe).
+
+The gap is not spread evenly across infection types (@fig-europe). Most of Germany's excess comes from urinary tract and *C. difficile* infections, where its burden is above the European average. Pneumonia shows the opposite pattern, with a lower burden in Germany, while surgical wound and bloodstream infections are broadly similar in both (Zacher et al., 2019). The error bars show how uncertain each estimate is, and for many infections they overlap considerably, meaning that it is not possible to say whether Germany is really different from the rest of Europe.
 
 ```{r}
 #| label: fig-europe
-#| fig-cap: "Annual burden of five types of HAI: (left) attributable deaths per 100,000 population and (right) DALYs per 100,000 population, Germany and EU/EEA, 2011–2012. Error bars show the 95% uncertainty interval."
+#| fig-cap: "Germany's extra burden comes mainly from urinary tract and C. difficile infections; pneumonia is below the EU/EEA average (per 100,000 people, 2011–2012). Error bars show the likely range."
 fig2 <- data.frame()
 for (s in c("German PPS", "ECDC PPS (EU/EEA)")) {
     res <- if (s=="German PPS") res_de else res_eu
@@ -141,10 +152,12 @@ subplot(burden_plot("Deaths", "Attributable deaths per 100,000", TRUE),
 
 ```{r}
 #| label: tbl-europe
-#| tbl-cap: "Annual burden per 100,000 population of five types of HAI, German PPS sample and ECDC PPS sample, Germany and EU/EEA, 2011–2012. Median and 95% uncertainty interval."
+#| tbl-cap: "Per 100,000 people, Germany has more hospital infections, deaths and healthy years lost than the EU/EEA average (2011–2012). Best estimate, with the likely range in brackets."
 cols <- c("Cases", "Deaths", "DALY")
 tab_de <- t(bhai.prettyTable(res_de, pop_norm=TRUE)[c(hai, "ALL"), cols])
 tab_eu <- t(bhai.prettyTable(res_eu, pop_norm=TRUE)[c(hai, "ALL"), cols])
+tab_de[] <- gsub(" \\(", "<br>(", tab_de) # range on a second line
+tab_eu[] <- gsub(" \\(", "<br>(", tab_eu)
 
 tab2 <- data.frame(
     measure=rep(c("HAIs per 100,000", "Attributable deaths per 100,000", "DALYs per 100,000"), each=2),
@@ -153,6 +166,8 @@ tab2 <- data.frame(
 )
 
 gt(tab2, groupname_col="measure", rowname_col="sample") |>
+    fmt_markdown(columns=c(hai, "ALL")) |>
+    cols_align(align="center", columns=c(hai, "ALL")) |>
     cols_label(ALL="All") |>
     tab_options(table.background.color="#ffffff", column_labels.font.weight="bold", row_group.font.weight="bold",
         container.padding.y=px(0))
@@ -160,11 +175,19 @@ gt(tab2, groupname_col="measure", rowname_col="sample") |>
 
 ## Solving the paradox
 
+How can each German patient be at lower risk, while Germany as a whole is worse off? The answer is simple: Germans go into hospital more often. Germany has more hospital beds per person than any other EU country, and more beds means more people being admitted, including some who would not really need to be there (Zacher et al., 2019). Each stay is slightly safer, but there are many more of them, and the infections add up.
 
+This is the most likely explanation, but not a certain one, as the study could not fully check how often people go into hospital in each country. A second, larger group of German hospitals, chosen less carefully, showed an even bigger gap with the rest of Europe (Zacher et al., 2019). And since the data are from 2011 and 2012, things may have changed since then.
 
 ## Conclusion
 
+Hospital infections cost Germany around `r format(round(tot_de["DALY"]), big.mark=",")` healthy years of life every year, almost eight times as much as influenza, *Salmonella*, hepatitis B and measles combined. The most common infections are not the most harmful: urinary tract infections are the most frequent, but pneumonia and bloodstream infections cause the most damage. And Germany's higher burden compared to the rest of Europe most likely comes from how many people go into hospital, not from hospitals being less safe.
 
+So, fewer infections per patient can still mean more harm overall. Reducing this burden means two things: keep improving hygiene and infection control, and avoid hospital stays that are not really needed (Zacher et al., 2019). Scrubbing up before surgery remains essential, but on its own it is only part of the answer.
+
+## Note
+
+All figures and tables in this post come from running BHAI on the same data used in the paper. This is because BHAI is built on Monte Carlo simulations: it repeats its calculation 1,000 times, each time with slightly different random values. Because the random values change from one run to the next, the numbers in this post differ slightly from the published ones. The differences are very small and do not change the conclusions of the paper.
 
 ## References
 

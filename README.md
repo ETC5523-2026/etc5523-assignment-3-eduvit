@@ -8,6 +8,7 @@
 I used Claude to:
 * fix unexpected issues in the theming, for example links that changed colour when hovered over, spacing between paragraphs in the blog post, the height of the title banner, and the space between plots, tables and text paragraphs;
 * add some CSS rules that I could not apply myself because I could not find the exact HTML class, for example for the navbar, the border around R-generated plots, and the listing categories inside blog posts;
+* adjust the page layout grid in `_quarto.yml` to reduce empty space on the left and widen the main text column;
 
 All CSS rules that relate to the colour scheme were created by myself; the initial palette was in brown tones, then later changed to blue tones for a nicer visualisation.
 

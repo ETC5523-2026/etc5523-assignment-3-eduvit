@@ -21,6 +21,10 @@ format:
     lightbox: true
     link-external-newwindow: true
     tbl-cap-location: bottom
+    grid:
+      sidebar-width: 50px
+      body-width: 900px
+      margin-width: 250px
 
 
 

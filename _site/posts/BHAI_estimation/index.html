@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Eduardo Vitale">
-<meta name="dcterms.date" content="2026-09-29">
-<meta name="description" content="Understanding the reason behind Germany insane numbers">
+<meta name="dcterms.date" content="2026-10-07">
+<meta name="description" content="Fewer German patients catch infections in hospitals than the European average, yet Germans lose more healthy years to them. Why?">
 
-<title>Good Hygiene, Bad Numbers? The Paradox of Germany’s Hospital Infections – The big beautiful website</title>
+<title>Fewer Infections, More Harm? The Paradox of Germany’s Hospital Infections – The big beautiful website</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -79,6 +79,24 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="../../site_libs/plotly-binding-4.12.1/plotly.js"></script>
+
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="../../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="../../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+<link href="../../site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="../../site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -123,15 +141,15 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Good Hygiene, Bad Numbers? The Paradox of Germany’s Hospital Infections</h1>
+      <h1 class="title">Fewer Infections, More Harm? The Paradox of Germany’s Hospital Infections</h1>
                   <div>
         <div class="description">
-          Understanding the reason behind Germany insane numbers
+          Fewer German patients catch infections in hospitals than the European average, yet Germans lose more healthy years to them. Why?
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">news</div>
                 <div class="quarto-category">healthcare</div>
+                <div class="quarto-category">public health</div>
                 <div class="quarto-category">R</div>
               </div>
                   </div>
@@ -150,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 29, 2026</p>
+        <p class="date">October 7, 2026</p>
       </div>
     </div>
     
@@ -169,16 +187,1138 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Scrubbing up before surgery is one of medicine’s oldest rituals, and one of its most effective.</p>
+<p>Scrubbing up before surgery is one of medicine’s oldest rituals, and one of its most effective. Before every operation, surgeons spend minutes washing their hands and forearms, because a single contaminated hand can carry bacteria straight into a patient’s body during the procedure.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="scrubbing.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Two surgical staff scrubbing their hands and forearms before an operation"><img src="scrubbing.jpg" class="img-fluid figure-img" alt=""></a></p>
-<figcaption>Two surgical staff scrubbing their hands and forearms before an operation</figcaption>
+<p><a href="thumbnail.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Two medical professionals scrubbing their hands before surgery."><img src="thumbnail.jpg" class="img-fluid figure-img" alt=""></a></p>
+<figcaption>Two medical professionals scrubbing their hands before surgery.</figcaption>
 </figure>
 </div>
-<p>source: https://unsplash.com/it/foto/due-professionisti-medici-che-strofinano-le-mani-prima-dellintervento-XE5S7RAbwLI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditShareLink</p>
+<p>Even so, hospitals remain a place where people catch infections. On any given day, about one in 18 patients in a European hospital has at least one infection acquired during their stay (ECDC, 2013). These are called healthcare-associated infections (HAIs), infections that develop in hospital and are unrelated to the reason for admission. A procedure can go perfectly, and the patient can still develop a urinary tract infection from a catheter a few days later. In Germany, an estimated 20 to 30% of HAIs are preventable (Gastmeier et al., 2010), but prevention resources are limited, so knowing which infections cause the most harm matters as much as knowing how many there are.</p>
+<p>Germany is a particularly interesting case: per hospitalised patient, its infection rate is below the European average; across the whole population however, Germans lose more years of healthy life to HAIs than the European average. This post looks at three questions: how large the burden of HAIs in Germany is, which infections drive it, and how a lower risk per patient can still produce a higher burden overall.</p>
+<section id="where-the-numbers-come-from" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-numbers-come-from">Where the numbers come from</h2>
+</section>
+<section id="how-big-is-the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="how-big-is-the-problem">How big is the problem?</h2>
+<div class="cell">
+<div id="tbl-germany" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-germany-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="grojyyxruw" style="padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#grojyyxruw table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#grojyyxruw thead, #grojyyxruw tbody, #grojyyxruw tfoot, #grojyyxruw tr, #grojyyxruw td, #grojyyxruw th {
+  border-style: none;
+}
+
+#grojyyxruw p {
+  margin: 0;
+  padding: 0;
+}
+
+#grojyyxruw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#grojyyxruw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#grojyyxruw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#grojyyxruw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#grojyyxruw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#grojyyxruw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#grojyyxruw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#grojyyxruw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#grojyyxruw .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#grojyyxruw .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#grojyyxruw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#grojyyxruw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#grojyyxruw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#grojyyxruw .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#grojyyxruw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#grojyyxruw .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#grojyyxruw .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#grojyyxruw .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#grojyyxruw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#grojyyxruw .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#grojyyxruw .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#grojyyxruw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#grojyyxruw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#grojyyxruw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#grojyyxruw .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#grojyyxruw .gt_left {
+  text-align: left;
+}
+
+#grojyyxruw .gt_center {
+  text-align: center;
+}
+
+#grojyyxruw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#grojyyxruw .gt_font_normal {
+  font-weight: normal;
+}
+
+#grojyyxruw .gt_font_bold {
+  font-weight: bold;
+}
+
+#grojyyxruw .gt_font_italic {
+  font-style: italic;
+}
+
+#grojyyxruw .gt_super {
+  font-size: 65%;
+}
+
+#grojyyxruw .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#grojyyxruw .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#grojyyxruw .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#grojyyxruw .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#grojyyxruw .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#grojyyxruw .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#grojyyxruw .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#grojyyxruw .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#grojyyxruw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table cell table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="HAI" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">HAI</th>
+<th id="Cases" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">HAIs</th>
+<th id="Deaths" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Attributable deaths</th>
+<th id="DALY" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">DALYs</th>
+<th id="YLL" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">YLLs</th>
+<th id="YLD" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">YLDs</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="HAI">HAP</td>
+<td class="gt_row gt_right" headers="Cases">106,171 (83,077 - 134,555)</td>
+<td class="gt_row gt_right" headers="Deaths">3,999 (875 - 7,961)</td>
+<td class="gt_row gt_right" headers="DALY">69,900 (32,642 - 113,617)</td>
+<td class="gt_row gt_right" headers="YLL">41,641 (8,967 - 82,208)</td>
+<td class="gt_row gt_right" headers="YLD">27,772 (16,068 - 42,464)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="HAI">SSI</td>
+<td class="gt_row gt_right" headers="Cases">93,650 (74,062 - 116,669)</td>
+<td class="gt_row gt_right" headers="Deaths">2,344 (1,851 - 2,891)</td>
+<td class="gt_row gt_right" headers="DALY">28,845 (22,902 - 35,772)</td>
+<td class="gt_row gt_right" headers="YLL">28,383 (22,550 - 35,171)</td>
+<td class="gt_row gt_right" headers="YLD">451 (345 - 579)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="HAI">BSI</td>
+<td class="gt_row gt_right" headers="Cases">26,767 (17,435 - 40,243)</td>
+<td class="gt_row gt_right" headers="Deaths">4,014 (2,088 - 6,756)</td>
+<td class="gt_row gt_right" headers="DALY">59,428 (30,829 - 100,661)</td>
+<td class="gt_row gt_right" headers="YLL">50,642 (25,326 - 86,645)</td>
+<td class="gt_row gt_right" headers="YLD">8,660 (4,284 - 16,044)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="HAI">UTI</td>
+<td class="gt_row gt_right" headers="Cases">213,525 (177,470 - 259,600)</td>
+<td class="gt_row gt_right" headers="Deaths">3,688 (1,474 - 7,571)</td>
+<td class="gt_row gt_right" headers="DALY">66,373 (28,197 - 127,111)</td>
+<td class="gt_row gt_right" headers="YLL">44,886 (18,149 - 91,887)</td>
+<td class="gt_row gt_right" headers="YLD">20,183 (8,167 - 39,930)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="HAI">CDI</td>
+<td class="gt_row gt_right" headers="Cases">36,253 (24,824 - 50,927)</td>
+<td class="gt_row gt_right" headers="Deaths">1,968 (90 - 4,447)</td>
+<td class="gt_row gt_right" headers="DALY">20,977 (1,886 - 47,794)</td>
+<td class="gt_row gt_right" headers="YLL">20,009 (885 - 46,431)</td>
+<td class="gt_row gt_right" headers="YLD">923 (155 - 2,083)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="HAI" style="font-weight: bold">All</td>
+<td class="gt_row gt_right" headers="Cases" style="font-weight: bold">477,737 (424,176 - 538,473)</td>
+<td class="gt_row gt_right" headers="Deaths" style="font-weight: bold">16,401 (10,894 - 22,885)</td>
+<td class="gt_row gt_right" headers="DALY" style="font-weight: bold">250,190 (180,199 - 341,327)</td>
+<td class="gt_row gt_right" headers="YLL" style="font-weight: bold">190,980 (130,464 - 266,603)</td>
+<td class="gt_row gt_right" headers="YLD" style="font-weight: bold">59,533 (39,007 - 85,203)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-germany-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Annual burden of five types of HAI, German PPS sample, Germany, 2011. Median and 95% uncertainty interval.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="the-most-common-infection-is-not-the-most-deadly" class="level2">
+<h2 class="anchored" data-anchor-id="the-most-common-infection-is-not-the-most-deadly">The most common infection is not the most deadly</h2>
+<div class="cell">
+<div id="fig-cases-deaths" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cases-deaths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-4dc200cbc085c4f9e429" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-4dc200cbc085c4f9e429">{"x":{"data":[{"x":["HAP","SSI","BSI","UTI","CDI"],"y":[106.17075612205697,93.650221995007954,26.766906193674867,213.52544141489167,36.253443942267531],"marker":{"color":"#00759C","line":{"color":"rgba(31,119,180,1)"}},"text":["106,171"," 93,650"," 26,767","213,525"," 36,253"],"textposition":["none","none","none","none","none"],"hovertemplate":["%{x}: %{text} infections<extra><\/extra>","%{x}: %{text} infections<extra><\/extra>","%{x}: %{text} infections<extra><\/extra>","%{x}: %{text} infections<extra><\/extra>","%{x}: %{text} infections<extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["HAP","SSI","BSI","UTI","CDI"],"y":[3999.2447208783906,2343.5278513191488,4013.8081301931761,3687.5063361402863,1967.7422161943143],"marker":{"color":"#00759C","line":{"color":"rgba(255,127,14,1)"}},"text":["3,999","2,344","4,014","3,688","1,968"],"textposition":["none","none","none","none","none"],"hovertemplate":["%{x}: %{text} deaths<extra><\/extra>","%{x}: %{text} deaths<extra><\/extra>","%{x}: %{text} deaths<extra><\/extra>","%{x}: %{text} deaths<extra><\/extra>","%{x}: %{text} deaths<extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x2","yaxis":"y2","frame":null}],"layout":{"xaxis":{"domain":[0,0.41999999999999998],"automargin":true,"type":"category","categoryorder":"array","categoryarray":["HAP","SSI","BSI","UTI","CDI"],"anchor":"y"},"xaxis2":{"domain":[0.57999999999999996,1],"automargin":true,"type":"category","categoryorder":"array","categoryarray":["HAP","SSI","BSI","UTI","CDI"],"anchor":"y2"},"yaxis2":{"domain":[0,1],"automargin":true,"title":"Attributable deaths","anchor":"x2"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Infections (thousands)","anchor":"x"},"annotations":[],"shapes":[],"images":[],"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"attrs":{"34c026f1731a":{"x":{},"y":{},"marker":{"color":"#00759C"},"text":{},"textposition":"none","hovertemplate":"%{x}: %{text} infections<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"34c042d34db8":{"x":{},"y":{},"marker":{"color":"#00759C"},"text":{},"textposition":"none","hovertemplate":"%{x}: %{text} deaths<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cases-deaths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Annual number of HAIs (left) and attributable deaths (right) by type of infection, Germany, 2011.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="germany-compared-with-the-rest-of-europe" class="level2">
+<h2 class="anchored" data-anchor-id="germany-compared-with-the-rest-of-europe">Germany compared with the rest of Europe</h2>
+<div class="cell">
+<div id="fig-europe" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-europe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-27895d4b864bf0ff9798" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-27895d4b864bf0ff9798">{"x":{"data":[{"x":["HAP","SSI","BSI","UTI","CDI"],"y":[4.9515542179137038,2.901574178848664,4.9695855002814389,4.5655839606355917,2.4363055902775033],"type":"bar","name":"German PPS","marker":{"color":"#B43E1D","line":{"color":"rgba(31,119,180,1)"}},"legendgroup":"de","showlegend":true,"text":["5 (1.1–9.9)","2.9 (2.3–3.6)","5 (2.6–8.4)","4.6 (1.8–9.4)","2.4 (0.1–5.5)"],"textposition":["none","none","none","none","none"],"hovertemplate":["<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>"],"error_y":{"color":"black","array":[4.9052363401659962,0.67821070541669792,3.3956752414284432,4.808018771253086,3.0700382878563532],"arrayminus":[3.8682804036959557,0.61025184970640112,2.3844599804576885,2.7409493889586143,2.3251132858605517]},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["HAP","SSI","BSI","UTI","CDI"],"y":[5.5525773412438797,2.5548287931076259,3.2896128584795332,3.0577609607104765,0.89847336612469675],"type":"bar","name":"ECDC PPS (EU/EEA)","marker":{"color":"#E3AF45","line":{"color":"rgba(255,127,14,1)"}},"legendgroup":"eu","showlegend":true,"text":["5.6 (1.6–10.4)","2.6 (2.4–2.7)","3.3 (2.1–4.6)","3.1 (1.3–6.1)","0.9 (0–1.7)"],"textposition":["none","none","none","none","none"],"hovertemplate":["<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>"],"error_y":{"color":"black","array":[4.8225319328480643,0.12534779554832864,1.3405614195042275,3.0562833193024552,0.83423517014216964],"arrayminus":[3.9826705142474923,0.12827542979914153,1.1706801137447038,1.7749625194291609,0.85020207070059539]},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["HAP","SSI","BSI","UTI","CDI"],"y":[86.544563054127636,35.713436773074029,73.579221203157729,82.177811180659475,25.972454453217416],"type":"bar","name":"German PPS","marker":{"color":"#B43E1D","line":{"color":"rgba(44,160,44,1)"}},"legendgroup":"de","showlegend":false,"text":["86.5 (40.4–140.7)","35.7 (28.4–44.3)","73.6 (38.2–124.6)","82.2 (34.9–157.4)","26 (2.3–59.2)"],"textposition":["none","none","none","none","none"],"hovertemplate":["<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>"],"error_y":{"color":"black","array":[54.127587718696944,8.5762971467425828,51.051139458139986,75.201740156774704,33.202681309876901],"arrayminus":[46.130089262329669,7.3582245163213003,35.408578732246802,47.265871714681936,23.637838393508954]},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x2","yaxis":"y2","frame":null},{"x":["HAP","SSI","BSI","UTI","CDI"],"y":[112.13474102288468,35.020082267607329,75.838967184049437,56.980366444055903,10.127926570778722],"type":"bar","name":"ECDC PPS (EU/EEA)","marker":{"color":"#E3AF45","line":{"color":"rgba(214,39,40,1)"}},"legendgroup":"eu","showlegend":false,"text":["112.1 (60–174)","35 (33.2–36.7)","75.8 (51.2–104)","57 (24.9–104.4)","10.1 (1–19.1)"],"textposition":["none","none","none","none","none"],"hovertemplate":["<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>"],"error_y":{"color":"black","array":[61.911892958256615,1.7059312358091958,28.183346626285839,47.43550942726057,8.9941723556277147],"arrayminus":[52.119882015936838,1.7701789402686003,24.684359040196227,32.054334942929337,9.1517131838128147]},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x2","yaxis":"y2","frame":null}],"layout":{"xaxis":{"domain":[0,0.41999999999999998],"automargin":true,"type":"category","categoryorder":"array","categoryarray":["HAP","SSI","BSI","UTI","CDI"],"anchor":"y"},"xaxis2":{"domain":[0.57999999999999996,1],"automargin":true,"type":"category","categoryorder":"array","categoryarray":["HAP","SSI","BSI","UTI","CDI"],"anchor":"y2"},"yaxis2":{"domain":[0,1],"automargin":true,"title":"DALYs per 100,000","anchor":"x2"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Attributable deaths per 100,000","anchor":"x"},"annotations":[],"shapes":[],"images":[],"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":true,"barmode":"group","legend":{"orientation":"h","x":0.5,"xanchor":"center","y":1.1200000000000001}},"attrs":{"34c06e634a58":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","name":"German PPS","marker":{"color":"#B43E1D"},"legendgroup":"de","showlegend":true,"text":["5 (1.1–9.9)","2.9 (2.3–3.6)","5 (2.6–8.4)","4.6 (1.8–9.4)","2.4 (0.1–5.5)"],"textposition":"none","hovertemplate":"<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","error_y":{"array":[4.9052363401659962,0.67821070541669792,3.3956752414284432,4.808018771253086,3.0700382878563532],"arrayminus":[3.8682804036959557,0.61025184970640112,2.3844599804576885,2.7409493889586143,2.3251132858605517],"color":"black"},"inherit":true},"34c0337a1b41":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","name":"ECDC PPS (EU/EEA)","marker":{"color":"#E3AF45"},"legendgroup":"eu","showlegend":true,"text":["5.6 (1.6–10.4)","2.6 (2.4–2.7)","3.3 (2.1–4.6)","3.1 (1.3–6.1)","0.9 (0–1.7)"],"textposition":"none","hovertemplate":"<b>%{x}<\/b><br>Attributable deaths per 100,000: %{text}<extra><\/extra>","error_y":{"array":[4.8225319328480643,0.12534779554832864,1.3405614195042275,3.0562833193024552,0.83423517014216964],"arrayminus":[3.9826705142474923,0.12827542979914153,1.1706801137447038,1.7749625194291609,0.85020207070059539],"color":"black"},"inherit":true},"34c028545fc4":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","name":"German PPS","marker":{"color":"#B43E1D"},"legendgroup":"de","showlegend":false,"text":["86.5 (40.4–140.7)","35.7 (28.4–44.3)","73.6 (38.2–124.6)","82.2 (34.9–157.4)","26 (2.3–59.2)"],"textposition":"none","hovertemplate":"<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","error_y":{"array":[54.127587718696944,8.5762971467425828,51.051139458139986,75.201740156774704,33.202681309876901],"arrayminus":[46.130089262329669,7.3582245163213003,35.408578732246802,47.265871714681936,23.637838393508954],"color":"black"},"inherit":true},"34c04b5a6598":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","name":"ECDC PPS (EU/EEA)","marker":{"color":"#E3AF45"},"legendgroup":"eu","showlegend":false,"text":["112.1 (60–174)","35 (33.2–36.7)","75.8 (51.2–104)","57 (24.9–104.4)","10.1 (1–19.1)"],"textposition":"none","hovertemplate":"<b>%{x}<\/b><br>DALYs per 100,000: %{text}<extra><\/extra>","error_y":{"array":[61.911892958256615,1.7059312358091958,28.183346626285839,47.43550942726057,8.9941723556277147],"arrayminus":[52.119882015936838,1.7701789402686003,24.684359040196227,32.054334942929337,9.1517131838128147],"color":"black"},"inherit":true}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-europe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Annual burden of five types of HAI: (left) attributable deaths per 100,000 population and (right) DALYs per 100,000 population, Germany and EU/EEA, 2011–2012. Error bars show the 95% uncertainty interval.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-europe" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-europe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="ncalafezej" style="padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ncalafezej table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ncalafezej thead, #ncalafezej tbody, #ncalafezej tfoot, #ncalafezej tr, #ncalafezej td, #ncalafezej th {
+  border-style: none;
+}
+
+#ncalafezej p {
+  margin: 0;
+  padding: 0;
+}
+
+#ncalafezej .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ncalafezej .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ncalafezej .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ncalafezej .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ncalafezej .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ncalafezej .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ncalafezej .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ncalafezej .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ncalafezej .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ncalafezej .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ncalafezej .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ncalafezej .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ncalafezej .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ncalafezej .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ncalafezej .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ncalafezej .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ncalafezej .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ncalafezej .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ncalafezej .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ncalafezej .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ncalafezej .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ncalafezej .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ncalafezej .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ncalafezej .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ncalafezej .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ncalafezej .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ncalafezej .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ncalafezej .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ncalafezej .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ncalafezej .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ncalafezej .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ncalafezej .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ncalafezej .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ncalafezej .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ncalafezej .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ncalafezej .gt_left {
+  text-align: left;
+}
+
+#ncalafezej .gt_center {
+  text-align: center;
+}
+
+#ncalafezej .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ncalafezej .gt_font_normal {
+  font-weight: normal;
+}
+
+#ncalafezej .gt_font_bold {
+  font-weight: bold;
+}
+
+#ncalafezej .gt_font_italic {
+  font-style: italic;
+}
+
+#ncalafezej .gt_super {
+  font-size: 65%;
+}
+
+#ncalafezej .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ncalafezej .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ncalafezej .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ncalafezej .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ncalafezej .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ncalafezej .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ncalafezej .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ncalafezej .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ncalafezej div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table cell table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="a::stub" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="HAP" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">HAP</th>
+<th id="SSI" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SSI</th>
+<th id="BSI" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">BSI</th>
+<th id="UTI" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">UTI</th>
+<th id="CDI" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">CDI</th>
+<th id="ALL" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">All</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="HAIs per 100,000" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">HAIs per 100,000</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">German PPS</th>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_1 HAP">131.5 (102.9 - 166.6)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_1 SSI">116 (91.7 - 144.5)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_1 BSI">33.1 (21.6 - 49.8)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_1 UTI">264.4 (219.7 - 321.4)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_1 CDI">44.9 (30.7 - 63.1)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_1 ALL">591.5 (525.2 - 666.7)</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">ECDC PPS (EU/EEA)</th>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_2 HAP">144 (136.7 - 151.1)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_2 SSI">111 (105.4 - 116.5)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_2 BSI">22.2 (19.8 - 25)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_2 UTI">174 (165.6 - 182.7)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_2 CDI">16.1 (14.2 - 18.3)</td>
+<td class="gt_row gt_right" headers="HAIs per 100,000 stub_1_2 ALL">467.3 (454.7 - 480.8)</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="7" id="Attributable deaths per 100,000" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">Attributable deaths per 100,000</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<th id="stub_1_3" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">German PPS</th>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_3 HAP">5 (1.1 - 9.9)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_3 SSI">2.9 (2.3 - 3.6)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_3 BSI">5 (2.6 - 8.4)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_3 UTI">4.6 (1.8 - 9.4)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_3 CDI">2.4 (0.1 - 5.5)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_3 ALL">20.3 (13.5 - 28.3)</td>
+</tr>
+<tr class="even">
+<th id="stub_1_4" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">ECDC PPS (EU/EEA)</th>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_4 HAP">5.6 (1.6 - 10.4)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_4 SSI">2.6 (2.4 - 2.7)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_4 BSI">3.3 (2.1 - 4.6)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_4 UTI">3.1 (1.3 - 6.1)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_4 CDI">0.9 (0 - 1.7)</td>
+<td class="gt_row gt_right" headers="Attributable deaths per 100,000 stub_1_4 ALL">15.6 (10.3 - 21)</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="DALYs per 100,000" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">DALYs per 100,000</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_5" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">German PPS</th>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_5 HAP">86.5 (40.4 - 140.7)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_5 SSI">35.7 (28.4 - 44.3)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_5 BSI">73.6 (38.2 - 124.6)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_5 UTI">82.2 (34.9 - 157.4)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_5 CDI">26 (2.3 - 59.2)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_5 ALL">309.8 (223.1 - 422.6)</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_6" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">ECDC PPS (EU/EEA)</th>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_6 HAP">112.1 (60 - 174)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_6 SSI">35 (33.2 - 36.7)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_6 BSI">75.8 (51.2 - 104)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_6 UTI">57 (24.9 - 104.4)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_6 CDI">10.1 (1 - 19.1)</td>
+<td class="gt_row gt_right" headers="DALYs per 100,000 stub_1_6 ALL">291.9 (220.2 - 369.6)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-europe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Annual burden per 100,000 population of five types of HAI, German PPS sample and ECDC PPS sample, Germany and EU/EEA, 2011–2012. Median and 95% uncertainty interval.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="solving-the-paradox" class="level2">
+<h2 class="anchored" data-anchor-id="solving-the-paradox">Solving the paradox</h2>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Cassini A, Plachouras D, Eckmanns T, Abu Sin M, Blank HP, Ducomble T, et al.&nbsp;<strong>Burden of Six Healthcare-Associated Infections on European Population Health: Estimating Incidence-Based Disability-Adjusted Life Years through a Population Prevalence-Based Modelling Study.</strong> <em>PLoS Med. 2016;13(10):e1002150.</em> <a href="https://doi.org/10.1371/journal.pmed.1002150">https://doi.org/10.1371/journal.pmed.1002150</a> PMID: 27755545</p>
+<p>European Centre for Disease Control and Prevention (ECDC). <strong>Point prevalence survey of healthcare-associated infections and antimicrobial use in European acute care hospitals.</strong> <em>Stockholm: ECDC; 2013.</em> <a href="https://www.ecdc.europa.eu/en/publications-data/point-prevalence-survey-healthcare-associated-infections-and-antimicrobial-use-0">https://www.ecdc.europa.eu/en/publications-data/point-prevalence-survey-healthcare-associated-infections-and-antimicrobial-use-0</a></p>
+<p>Gastmeier P, Brunkhorst F, Schrappe M, Kern W, Geffers C. <strong>How many nosocomial infections are avoidable?.</strong> <em>Dtsch Med Wochenschr. 2010;135(3):91-3.</em> <a href="https://doi.org/10.1055/s-0029-1244823">https://doi.org/10.1055/s-0029-1244823</a> PMID: 20077383</p>
+<p>Zacher Benedikt, Haller Sebastian, Willrich Niklas, Walter Jan, Abu Sin Muna, Cassini Alessandro, Plachouras Diamantis, Suetens Carl, Behnke Michael, Gastmeier Petra, Wieler Lothar H., Eckmanns Tim. <strong>Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 to 2012.</strong> <em>Euro Surveillance, 2019;24(46):pii=1900135.</em> <a href="https://doi.org/10.2807/1560-7917.ES.2019.24.46.1900135">https://doi.org/10.2807/1560-7917.ES.2019.24.46.1900135</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

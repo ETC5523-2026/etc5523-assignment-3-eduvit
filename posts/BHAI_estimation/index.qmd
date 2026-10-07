@@ -1,19 +1,177 @@
 ---
-title: "Good Hygiene, Bad Numbers? The Paradox of Germany's Hospital Infections"
-description: "Understanding the reason behind Germany insane numbers"
+title: "Fewer Infections, More Harm? The Paradox of Germany's Hospital Infections"
+description: "Fewer German patients catch infections in hospitals than the European average, yet Germans lose more healthy years to them. Why?"
 author: "Eduardo Vitale"
-date: 2026-09-29
-image: thumbnail.jpg
-categories:
-    - news
-    - healthcare
-    - R
+date: "2026-10-07"
+categories: [healthcare, public health, R]
+image: "thumbnail.jpg"
+execute:
+    echo: false
+    warning: false
+    message: false
 ---
 
-Scrubbing up before surgery is one of medicine's oldest rituals, and one of its most effective. 
+```{r}
+#| label: packages
+library(BHAI)
+library(plotly)
+library(gt)
 
-![Two surgical staff scrubbing their hands and forearms before an operation](scrubbing.jpg){fig-alt=""}
+hai <- c("HAP", "SSI", "BSI", "UTI", "CDI") # order used in the paper
+```
 
-source: https://unsplash.com/it/foto/due-professionisti-medici-che-strofinano-le-mani-prima-dellintervento-XE5S7RAbwLI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
+```{r}
+#| label: setup
+#| cache: true
+data(german_pps_2011_repr)
+germany <- PPS(num_hai_patients=num_hai_patients, num_hai_patients_by_stratum=num_hai_patients_by_stratum,
+    num_hai_patients_by_stratum_prior=num_hai_patients_by_stratum_prior, num_survey_patients=num_survey_patients,
+    length_of_stay=length_of_stay, loi_pps=loi_pps, mccabe_scores_distr=mccabe_scores_distr,
+    mccabe_life_exp=mccabe_life_exp, hospital_discharges=hospital_discharges, population=population,
+    country="German PPS")
+
+data(eu_pps_2011) # loads eu_pps
+
+set.seed(2026)
+res_de <- bhai(germany, nsim=1000)
+res_eu <- bhai(eu_pps, nsim=1000)
+```
+
+```{r}
+#| label: totals
+tot_de <- res_de@bhai_summary$ALL$TOTAL[, "50%"] # medians for all five HAIs
+tot_eu <- res_eu@bhai_summary$ALL$TOTAL[, "50%"]
+per100k_de <- tot_de / sum(res_de@population) * 1e5
+per100k_eu <- tot_eu / sum(res_eu@population) * 1e5
+gap <- round((per100k_de / per100k_eu - 1) * 100) # % difference, Germany vs EU/EEA
+```
+
+Scrubbing up before surgery is one of medicine's oldest rituals, and one of its most effective. Before every operation, surgeons spend minutes washing their hands and forearms, because a single contaminated hand can carry bacteria straight into a patient's body during the procedure.
+
+![Two medical professionals scrubbing their hands before surgery.](thumbnail.jpg){fig-alt=""}
+
+Even so, hospitals remain a place where people catch infections. On any given day, about one in 18 patients in a European hospital has at least one infection acquired during their stay (ECDC, 2013). These are called healthcare-associated infections (HAIs), infections that develop in hospital and are unrelated to the reason for admission. A procedure can go perfectly, and the patient can still develop a urinary tract infection from a catheter a few days later. In Germany, an estimated 20 to 30% of HAIs are preventable (Gastmeier et al., 2010), but prevention resources are limited, so knowing which infections cause the most harm matters as much as knowing how many there are.
+
+Germany is a particularly interesting case: per hospitalised patient, its infection rate is below the European average; across the whole population however, Germans lose more years of healthy life to HAIs than the European average. This post looks at three questions: how large the burden of HAIs in Germany is, which infections drive it, and how a lower risk per patient can still produce a higher burden overall.
+
+## Where the numbers come from
 
 
+
+## How big is the problem?
+
+
+
+```{r}
+#| label: tbl-germany
+#| tbl-cap: "Annual burden of five types of HAI, German PPS sample, Germany, 2011. Median and 95% uncertainty interval."
+tab1 <- bhai.prettyTable(res_de)[c(hai, "ALL"), ]
+tab1 <- data.frame(HAI=c(hai, "All"), tab1)
+
+gt(tab1) |>
+    cols_label(Cases="HAIs", Deaths="Attributable deaths", DALY="DALYs", YLL="YLLs", YLD="YLDs") |>
+    tab_style(style=cell_text(weight="bold"), locations=cells_body(rows=HAI == "All")) |>
+    tab_options(table.background.color="#ffffff", column_labels.font.weight="bold", container.padding.y=px(0))
+```
+
+## The most common infection is not the most deadly
+
+
+
+```{r}
+#| label: fig-cases-deaths
+#| fig-cap: "Annual number of HAIs (left) and attributable deaths (right) by type of infection, Germany, 2011."
+fig1 <- data.frame(hai=factor(hai, levels=hai), cases=NA, deaths=NA)
+for (i in 1:5) {
+    fig1$cases[i] <- res_de@bhai_summary[[hai[i]]]$TOTAL["Cases", "50%"]
+    fig1$deaths[i] <- res_de@bhai_summary[[hai[i]]]$TOTAL["Deaths", "50%"]
+}
+
+cases_plot <- plot_ly(fig1, x=~hai, y=~cases / 1000, type="bar", marker=list(color="#00759C"),
+    text=~format(round(cases), big.mark=","), textposition="none",
+    hovertemplate="%{x}: %{text} infections<extra></extra>")
+deaths_plot <- plot_ly(fig1, x=~hai, y=~deaths, type="bar", marker=list(color="#00759C"),
+    text=~format(round(deaths), big.mark=","), textposition="none",
+    hovertemplate="%{x}: %{text} deaths<extra></extra>")
+
+subplot(cases_plot, deaths_plot, titleY=TRUE, margin=0.08) |>
+    layout(showlegend=FALSE, yaxis=list(title="Infections (thousands)"), yaxis2=list(title="Attributable deaths")) |>
+    config(displayModeBar=FALSE)
+```
+
+## Germany compared with the rest of Europe
+
+
+
+```{r}
+#| label: fig-europe
+#| fig-cap: "Annual burden of five types of HAI: (left) attributable deaths per 100,000 population and (right) DALYs per 100,000 population, Germany and EU/EEA, 2011–2012. Error bars show the 95% uncertainty interval."
+fig2 <- data.frame()
+for (s in c("German PPS", "ECDC PPS (EU/EEA)")) {
+    res <- if (s=="German PPS") res_de else res_eu
+    k <- 1e5 / sum(res@population)
+    for (i in hai) {
+        tot <- res@bhai_summary[[i]]$TOTAL[c("Deaths", "DALY"), ] * k
+        fig2 <- rbind(fig2, data.frame(sample=s, hai=i, measure=c("Deaths", "DALY"),
+            low=tot[, "2.5%"], mid=tot[, "50%"], high=tot[, "97.5%"]))
+    }
+}
+fig2$hai <- factor(fig2$hai, levels=hai)
+
+burden_plot <- function(m, y_title, legend) {
+    de <- subset(fig2, sample == "German PPS" & measure == m)
+    eu <- subset(fig2, sample == "ECDC PPS (EU/EEA)" & measure == m)
+    label <- function(d) paste0(round(d$mid, 1), " (", round(d$low, 1), "–", round(d$high, 1), ")")
+    hover <- paste0("<b>%{x}</b><br>", y_title, ": %{text}<extra></extra>")
+    plot_ly() |>
+        add_bars(data=de, x=~hai, y=~mid, name="German PPS", marker=list(color="#B43E1D"),
+            legendgroup="de", showlegend=legend, text=label(de), textposition="none", hovertemplate=hover,
+            error_y=list(array=de$high - de$mid, arrayminus=de$mid - de$low, color="black")) |>
+        add_bars(data=eu, x=~hai, y=~mid, name="ECDC PPS (EU/EEA)", marker=list(color="#E3AF45"),
+            legendgroup="eu", showlegend=legend, text=label(eu), textposition="none", hovertemplate=hover,
+            error_y=list(array=eu$high - eu$mid, arrayminus=eu$mid - eu$low, color="black")) |>
+        layout(yaxis=list(title=y_title))
+}
+
+subplot(burden_plot("Deaths", "Attributable deaths per 100,000", TRUE),
+    burden_plot("DALY", "DALYs per 100,000", FALSE), titleY=TRUE, margin=0.08) |>
+    layout(barmode="group", legend=list(orientation="h", x=0.5, xanchor="center", y=1.12)) |>
+    config(displayModeBar=FALSE)
+```
+
+```{r}
+#| label: tbl-europe
+#| tbl-cap: "Annual burden per 100,000 population of five types of HAI, German PPS sample and ECDC PPS sample, Germany and EU/EEA, 2011–2012. Median and 95% uncertainty interval."
+cols <- c("Cases", "Deaths", "DALY")
+tab_de <- t(bhai.prettyTable(res_de, pop_norm=TRUE)[c(hai, "ALL"), cols])
+tab_eu <- t(bhai.prettyTable(res_eu, pop_norm=TRUE)[c(hai, "ALL"), cols])
+
+tab2 <- data.frame(
+    measure=rep(c("HAIs per 100,000", "Attributable deaths per 100,000", "DALYs per 100,000"), each=2),
+    sample=rep(c("German PPS", "ECDC PPS (EU/EEA)"), times=3),
+    rbind(tab_de, tab_eu)[c(1, 4, 2, 5, 3, 6), ]
+)
+
+gt(tab2, groupname_col="measure", rowname_col="sample") |>
+    cols_label(ALL="All") |>
+    tab_options(table.background.color="#ffffff", column_labels.font.weight="bold", row_group.font.weight="bold",
+        container.padding.y=px(0))
+```
+
+## Solving the paradox
+
+
+
+## Conclusion
+
+
+
+## References
+
+Cassini A, Plachouras D, Eckmanns T, Abu Sin M, Blank HP, Ducomble T, et al. **Burden of Six Healthcare-Associated Infections on European Population Health: Estimating Incidence-Based Disability-Adjusted Life Years through a Population Prevalence-Based Modelling Study.** *PLoS Med. 2016;13(10):e1002150.* [https://doi.org/10.1371/journal.pmed.1002150](https://doi.org/10.1371/journal.pmed.1002150) PMID: 27755545
+
+European Centre for Disease Control and Prevention (ECDC). **Point prevalence survey of healthcare-associated infections and antimicrobial use in European acute care hospitals.** *Stockholm: ECDC; 2013.* [https://www.ecdc.europa.eu/en/publications-data/point-prevalence-survey-healthcare-associated-infections-and-antimicrobial-use-0](https://www.ecdc.europa.eu/en/publications-data/point-prevalence-survey-healthcare-associated-infections-and-antimicrobial-use-0)
+
+Gastmeier P, Brunkhorst F, Schrappe M, Kern W, Geffers C. **How many nosocomial infections are avoidable?.** *Dtsch Med Wochenschr. 2010;135(3):91-3.* [https://doi.org/10.1055/s-0029-1244823](https://doi.org/10.1055/s-0029-1244823) PMID: 20077383
+
+Zacher Benedikt, Haller Sebastian, Willrich Niklas, Walter Jan, Abu Sin Muna, Cassini Alessandro, Plachouras Diamantis, Suetens Carl, Behnke Michael, Gastmeier Petra, Wieler Lothar H., Eckmanns Tim. **Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 to 2012.** *Euro Surveillance, 2019;24(46):pii=1900135.* [https://doi.org/10.2807/1560-7917.ES.2019.24.46.1900135](https://doi.org/10.2807/1560-7917.ES.2019.24.46.1900135)

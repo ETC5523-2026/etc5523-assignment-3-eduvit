@@ -192,7 +192,7 @@ gt(tab2, rowname_col="measure") |>
 
 This is the most likely explanation, but not a certain one, as the study did not test it directly. A second, larger group of German hospitals, not chosen to be representative, showed an even bigger gap with the rest of Europe. And since the data are from 2011 and 2012, things may have changed since then: a repeat survey in 2016 suggests that infections in German hospitals fell slightly, although Germany still had more per person than the EU/EEA average.
 
-## So, should you worry?
+## Should you worry?
 
 For anyone going into hospital, the risk from a single stay is small, at about 1 in `r round(100 / risk_de, -1)`. Not all of these infections are equally serious, either: urinary tract infections are the most frequent, but case for case, pneumonia and bloodstream infections cause far more damage.
 

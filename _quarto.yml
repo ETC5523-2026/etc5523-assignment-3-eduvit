@@ -25,6 +25,9 @@ format:
       sidebar-width: 50px
       body-width: 900px
       margin-width: 250px
+    include-in-header:
+      text: |
+        <meta name="robots" content="noindex, nofollow, noai, noimageai">
 
 
 

@@ -2,7 +2,7 @@
 # ETC5523 Blog Assessment
 * This is a **template** for the ETC5523 Blog Assessment provided by **Michael Lydeamore**.
 * The author of this blog is **Eduardo Vitale**.
-* The URL for this blog is [https://etc5523-2023.github.io/blog-template/](https://etc5523-2023.github.io/blog-template/)
+* The URL for this blog is [https://ETC5523-2026.github.io/etc5523-assignment-3-eduvit/](https://ETC5523-2026.github.io/etc5523-assignment-3-eduvit/)
 
 # Generative AI declaration
 I used Claude to:

@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "The big beautiful website"
+  title: "All Roads Lead to R"
   navbar:
     background: "#0d3b66"
     foreground: "#d6e6f2"

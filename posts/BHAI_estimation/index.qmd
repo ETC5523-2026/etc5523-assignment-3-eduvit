@@ -3,7 +3,7 @@ title: "Germany's Hospital Paradox: Lower Risk per Stay, More Infections"
 description: "German hospital patients are less likely to catch an infection than the European average, yet Germany has more hospital infections per person. Why?"
 author: "Eduardo Vitale"
 date: "2026-10-09"
-categories: [healthcare, public health, Germany, Europe]
+categories: [Healthcare, Public health, Germany, Europe]
 image: "thumbnail.jpg"
 execute:
     echo: false

@@ -67,3 +67,14 @@ div:has(> .plotly.html-widget) {
 
 /* title in the banner uses the full width (made by AI) */
 .quarto-title-banner .quarto-title {grid-column: body-content-start / page-end-inset;}
+
+/* intro box on the main page */
+.site-welcome {
+  background-color: var(--mid);
+  border: 2px solid var(--dark);
+  border-radius: 6px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 2rem;
+}
+.site-welcome p:last-child {margin-bottom: 0;}  /* made by AI */
+

@@ -6,3 +6,7 @@ freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
+
+# Enable table of contents in blog posts
+toc: true
+toc-title: "Contents"

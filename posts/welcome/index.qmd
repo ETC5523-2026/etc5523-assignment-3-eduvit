@@ -2,7 +2,7 @@
 title: "Welcome To My Blog Template"
 author: "Emi Tanaka"
 date: "2022-07-18"
-categories: [news]
+categories: [News]
 ---
 
 This is the first post in a Quarto blog. Welcome!

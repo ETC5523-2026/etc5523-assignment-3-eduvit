@@ -11,4 +11,8 @@ page-layout: full
 title-block-banner: true
 ---
 
+:::{.site-welcome}
+Welcome to **All Roads Lead to R**, a blog about interesting and unusual stories hidden in data.
 
+The name is a reference to the old saying "all roads lead to Rome": a small tribute to my Italian roots, and a playful way to bring them together with [R](https://www.r-project.org/), one of the most popular programming languages for data analysis. 
+:::

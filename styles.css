@@ -50,10 +50,11 @@ div.quarto-post {border-bottom: 1px solid var(--dark); padding-bottom: 1rem;}
 .listing-title a, .listing-date, #toc-title,
 #title-block-header.quarto-title-block.default .quarto-title-meta-heading {font-weight: bold;}
 
-/* category tags (homepage, post banner) and about page buttons (the rule that applies in the blog post was made by AI) */
+/* category tags (homepage, post banner) and about page buttons (the rule that applies in the blog post page was made by AI) */
 .listing-categories {padding-top: 5px;}
 div.quarto-post .listing-categories .listing-category,
 .quarto-title .quarto-categories .quarto-category {color: var(--text); border: 1px solid var(--text); opacity: 1;}
+div.quarto-post .listing-categories .listing-category {pointer-events: none; cursor: default;} /* made by AI: disable clicking on homepage */
 div.quarto-about-jolla .about-link {color: var(--dark); border: 1px solid var(--dark);}
 
 /* general plot/figures border rules (the second rule was made by AI) */
@@ -67,3 +68,24 @@ div:has(> .plotly.html-widget) {
 
 /* title in the banner uses the full width (made by AI) */
 .quarto-title-banner .quarto-title {grid-column: body-content-start / page-end-inset;}
+
+/* intro box on the main page */
+.site-welcome {
+  background-color: var(--mid);
+  border: 2px solid var(--dark);
+  border-radius: 6px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 2rem;
+}
+.site-welcome p:last-child {margin-bottom: 0;}  /* made by AI */
+
+/* posts: author and published date inside the title banner (made by AI) */
+#title-block-header:has(.quarto-title-meta-heading) {
+  background-color: var(--mid);
+  padding-bottom: 1.2rem;
+  margin-bottom: 1rem;
+}
+#title-block-header:has(.quarto-title-meta-heading) .quarto-title-banner {
+  margin-bottom: 0;
+  padding-bottom: 0.6rem;
+}

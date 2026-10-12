@@ -2,16 +2,32 @@ project:
   type: website
 
 website:
-  title: "blog-template"
+  title: "All Roads Lead to R"
   navbar:
+    background: "#0d3b66"
+    foreground: "#d6e6f2"
+    left:
+      - href: about.qmd
+        text: About
     right:
-      - about.qmd
       - icon: github
-        href: https://github.com/etc5523-2022
+        href: https://github.com/EduVit
+        target: _blank
 format:
   html:
     theme: cosmo
+    from: markdown+emoji
     css: styles.css
+    lightbox: true
+    link-external-newwindow: true
+    tbl-cap-location: bottom
+    grid:
+      sidebar-width: 50px
+      body-width: 900px
+      margin-width: 250px
+    include-in-header:
+      text: |
+        <meta name="robots" content="noindex, nofollow, noai, noimageai">
 
 
 
